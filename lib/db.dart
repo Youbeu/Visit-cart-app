@@ -58,4 +58,26 @@ class Db {
         conflictAlgorithm : ConflictAlgorithm.replace
     );
   }
+
+  Future<Map<String, String>> getUserData() async {
+    final db = await database;
+    final List<Map<String, dynamic>> result = await db.query('user_data', limit: 1);
+
+    if (result.isNotEmpty) {
+      return {
+        'name': result[0]['name'] ?? '',
+        'profession': result[0]['profession'] ?? '',
+        'phone': result[0]['phone'] ?? '',
+        'email': result[0]['email'] ?? '',
+      };
+    } else {
+      return {
+        'name': '',
+        'profession': '',
+        'phone': '',
+        'email': '',
+      };
+    }
+  }
+
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:harry/pages/home.dart';
-import 'package:harry/pages/onboarding.dart';
+import 'package:harry/pages/home_page.dart';
+import 'package:harry/pages/onboarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'db.dart';
 

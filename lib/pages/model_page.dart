@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-
-import 'model_preview_page.dart';
+import 'package:harry/model/model3.dart';
+import '../model/model1.dart';
+import '../model/model2.dart';
+import '../model/model4.dart';
+import '../model/model5.dart';
+import 'package:harry/db.dart';
 
 class ModelPage extends StatelessWidget {
   const ModelPage({super.key});
@@ -11,49 +15,27 @@ class ModelPage extends StatelessWidget {
       appBar:AppBar(
         backgroundColor: Colors.red,
         title: Text(
-          "Selectionner Votre Modèle",
+          "Choisissez un Modèle",
           style: TextStyle(
             color:Colors.white,
             fontWeight: FontWeight.bold
           ),
         ),
       ),
-      body: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.75
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Model1(),
+              Model2(),
+              Model3(),
+              Model4(),
+              Model5(),
+            ],
           ),
-          itemCount: 5,
-          itemBuilder: (context, index){
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ModelPreviewPage(modelIndex: index),
-                  ),
-                );
-              },
-              child: Card(
-                margin: EdgeInsets.all(10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.person, size: 100, color: Colors.red), // Remplacer par une image
-                    const SizedBox(height: 10),
-                    Text(
-                      "Modèle ${index + 1}",
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
-      )
+        ),
+      ),
     );
   }
 }

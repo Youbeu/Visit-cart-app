@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:harry/onboarding_page.dart';
-import 'home.dart';
+import 'package:harry/onboarding.dart';
+import 'home_page.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
