@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:harry/db.dart';
+import 'model_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,25 +19,48 @@ class _HomePageState extends State<HomePage> {
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
 
+
+
   // Méthode pour gérer la soumission
-  void _submitForm() {
+  Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isSubmitting = true;
       });
 
-      // Simuler un délai pour la soumission
-      Future.delayed(const Duration(seconds: 2), () {
+      try {
+        final name = _nameController.text;
+        final profession = _professionController.text;
+        final phone = _phoneController.text;
+        final email = _emailController.text;
+
+        // Insérer les données dans SQLite
+        await Db.instance.insertUser(name, profession, phone, email);
+
+        // Rediriger vers la page de sélection de modèle
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ModelPage()),
+        );
+      } catch (error) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Erreur"),
+            content: Text("Impossible de sauvegarder les données : $error"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+        );
+      } finally {
         setState(() {
           _isSubmitting = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Formulaire soumis avec succès !'),
-            backgroundColor: Colors.red,
-          ),
-        );
-      });
+      }
     }
   }
 
