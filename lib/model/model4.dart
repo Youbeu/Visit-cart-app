@@ -1,48 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:harry/pages/model_preview_page.dart';
 
 class Model4 extends StatelessWidget {
-  const Model4({super.key});
+  final Map<String, String> userData;
+
+  const Model4({Key? key, required this.userData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("Yo le YAC!!");
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: Colors.green.shade300,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.green, width: 1),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              color: Colors.white,
-              child: const Icon(Icons.image, size: 40, color: Colors.green),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ModelPreviewPage(
+              modelWidget: buildCard(userData), // Passe le widget avec les données
+              userData: userData, // Passe également les données utilisateur
             ),
-            const SizedBox(width: 15),
-            Column(
+          ),
+        );
+      },
+      child: buildCard(userData), // Affiche la carte avec les données
+    );
+  }
+
+  Widget buildCard(Map<String, String> data) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.green.shade300,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.green, width: 1),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            color: Colors.white,
+            child: const Icon(Icons.image, size: 40, color: Colors.green),
+          ),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text("Nom :", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color:Colors.white)),
-                SizedBox(height: 5),
-                Text("Profession :", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color:Colors.white)),
-                SizedBox(height: 5),
-                Text("Téléphone :", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color:Colors.white)),
-                SizedBox(height: 5),
-                Text("Email :", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color:Colors.white)),
+              children: [
+                Text(
+                  "Nom : ${data['name'] ?? ''}",
+                  style: const TextStyle(fontSize: 14, color: Colors.white),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  "Profession : ${data['profession'] ?? ''}",
+                  style: const TextStyle(fontSize: 14, color: Colors.white),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  "Téléphone : ${data['phone'] ?? ''}",
+                  style: const TextStyle(fontSize: 14, color: Colors.white),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  "Email : ${data['email'] ?? ''}",
+                  style: const TextStyle(fontSize: 14, color: Colors.white),
+                ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
-

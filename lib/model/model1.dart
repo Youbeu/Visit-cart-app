@@ -36,8 +36,8 @@ class Model1 extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 80,
-            height: 80,
+            width: 60,
+            height: 60,
             color: Colors.grey.shade300,
             child: const Icon(Icons.image, size: 40, color: Colors.black),
           ),
@@ -48,16 +48,16 @@ class Model1 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("Nom : ${data['name'] ?? ''}",
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 14)),
                 const SizedBox(height: 5),
                 Text("Profession : ${data['profession'] ?? ''}",
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 14)),
                 const SizedBox(height: 5),
                 Text("Téléphone : ${data['phone'] ?? ''}",
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 14)),
                 const SizedBox(height: 5),
                 Text("Email : ${data['email'] ?? ''}",
-                    style: const TextStyle(fontSize: 16)),
+                    style: const TextStyle(fontSize: 14)),
               ],
             ),
           ),
