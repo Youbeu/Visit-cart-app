@@ -1,30 +1,42 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:harry/main.dart';
+import 'package:harry/pages/home_page.dart';
+import 'package:harry/pages/onboarding_page.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp(showHome: false,));
+  testWidgets('Affiche la page d\'accueil si showHome est true', (WidgetTester tester) async {
+    // Montre l'application avec showHome = true
+    await tester.pumpWidget(MyApp(showHome: true));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Vérifie si la page d'accueil est présente
+    expect(find.byType(HomePage), findsOneWidget); // Vérifie la présence de HomePage
+    expect(find.byType(Onboarding), findsNothing); // Vérifie l'absence d'Onboarding
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('Affiche la page d\'onboarding si showHome est false', (WidgetTester tester) async {
+    // Montre l'application avec showHome = false
+    await tester.pumpWidget(MyApp(showHome: false));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Vérifie si la page d'onboarding est présente
+    expect(find.byType(Onboarding), findsOneWidget); // Vérifie la présence d'Onboarding
+    expect(find.byType(HomePage), findsNothing); // Vérifie l'absence de HomePage
+  });
+
+  testWidgets('Vérifie que le bouton "Allons Y !" fonctionne', (WidgetTester tester) async {
+    // Montre l'application avec showHome = false
+    await tester.pumpWidget(MyApp(showHome: false));
+
+    // Trouve le bouton "Allons Y !" et simule un tap
+    final goButton = find.text('Allons Y !');
+    expect(goButton, findsOneWidget); // Vérifie que le bouton est présent
+
+    // Simule le tap sur le bouton
+    await tester.tap(goButton);
+    await tester.pumpAndSettle(); // Attend la transition
+
+    // Vérifie que la page d'accueil est affichée après le tap
+    expect(find.byType(HomePage), findsOneWidget); // Vérifie la présence de HomePage
+    expect(find.byType(Onboarding), findsNothing); // Vérifie l'absence d'Onboarding
   });
 }

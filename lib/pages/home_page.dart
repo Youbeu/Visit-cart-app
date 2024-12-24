@@ -10,39 +10,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _formKey = GlobalKey<FormState>(); // Pour la validation du formulaire
-  bool _isSubmitting = false; // Pour afficher un spinner pendant la soumission
+  final _formKey = GlobalKey<FormState>(); // Clé pour la validation du formulaire
+  bool _isSubmitting = false; // Indique si le formulaire est en cours de soumission
 
-  // Contrôleurs pour récupérer les valeurs des champs
+  // Contrôleurs pour récupérer les valeurs des champs de saisie
   final _nameController = TextEditingController();
   final _professionController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
 
-
-
-  // Méthode pour gérer la soumission
+  // Méthode pour gérer la soumission du formulaire
   Future<void> _submitForm() async {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) { // Valide le formulaire
       setState(() {
-        _isSubmitting = true;
+        _isSubmitting = true; // Affiche un indicateur de chargement
       });
 
       try {
+        // Récupère les données des contrôleurs
         final name = _nameController.text;
         final profession = _professionController.text;
         final phone = _phoneController.text;
         final email = _emailController.text;
 
-        // Insérer les données dans SQLite
+        // Insère les données dans la base de données SQLite
         await Db.instance.insertUser(name, profession, phone, email);
 
-        // Rediriger vers la page de sélection de modèle
+        // Navigue vers la page de sélection de modèle
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const ModelPage()),
         );
       } catch (error) {
+        // Affiche une erreur si la sauvegarde échoue
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         );
       } finally {
         setState(() {
-          _isSubmitting = false;
+          _isSubmitting = false; // Masque l'indicateur de chargement
         });
       }
     }
@@ -103,6 +103,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 10),
+                // Champs de saisie pour les informations utilisateur
                 _buildTextField(
                   controller: _nameController,
                   label: "Nom Complet",
@@ -163,6 +164,7 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 const SizedBox(height: 20),
+                // Bouton de soumission
                 SizedBox(
                   width: double.infinity,
                   height: 50,
@@ -198,6 +200,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Méthode pour construire un champ de saisie avec un contrôleur et une validation
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,

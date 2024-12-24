@@ -5,15 +5,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'db.dart';
 
 Future<void> main() async {
-
+  // Pour s'assurez que le widget de l'arbre de widgets est correctement lié avant d'exécuter l'application.
   WidgetsFlutterBinding.ensureInitialized();
 
-
+  // Récupére une instance des SharedPreferences.
   final prefs = await SharedPreferences.getInstance();
+  // Vérifie si l'utilisateur a déjà vu la page d'accueil.
   final showHome = prefs.getBool('showHome') ?? false;
+  // Initialise la base de données.
   final db = await Db.instance.database;
 
-
+  // Lance l'application en passant la variable showHome.
   runApp(MyApp(showHome: showHome));
 }
 
@@ -28,12 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: showHome ? HomePage() : Onboarding(),
+      home: showHome ? HomePage() : Onboarding(), // Affiche la HomePage ou Onboarding en fonction de showHome.
     );
   }
 }
