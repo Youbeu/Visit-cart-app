@@ -22,10 +22,13 @@ void main() {
     expect(find.byType(Onboarding), findsOneWidget); // Vérifie la présence d'Onboarding
     expect(find.byType(HomePage), findsNothing); // Vérifie l'absence de HomePage
   });
-
   testWidgets('Vérifie que le bouton "Allons Y !" fonctionne', (WidgetTester tester) async {
     // Montre l'application avec showHome = false
     await tester.pumpWidget(MyApp(showHome: false));
+
+    // Faites glisser jusqu'à la dernière page
+    await tester.drag(find.byType(PageView), Offset(-1000, 0)); // Ajustez si nécessaire
+    await tester.pumpAndSettle(); // Attend que l'animation soit terminée
 
     // Trouve le bouton "Allons Y !" et simule un tap
     final goButton = find.text('Allons Y !');
@@ -39,4 +42,5 @@ void main() {
     expect(find.byType(HomePage), findsOneWidget); // Vérifie la présence de HomePage
     expect(find.byType(Onboarding), findsNothing); // Vérifie l'absence d'Onboarding
   });
+
 }

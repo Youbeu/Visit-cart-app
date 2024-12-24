@@ -76,7 +76,7 @@ class _OnboardingState extends State<Onboarding> {
                 MaterialPageRoute(builder: (context) => HomePage()));
           },
           child: Text(
-            "Allons Y !",
+            'Allons Y !',
             style: TextStyle(fontSize: 24),
           ),
         ),
