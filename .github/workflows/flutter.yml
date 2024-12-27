@@ -33,5 +33,5 @@ jobs:
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: app-release-apk
+          name: Visi Gen
           path: build/app/outputs/flutter-apk/app-release.apk
